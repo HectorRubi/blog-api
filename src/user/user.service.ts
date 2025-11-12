@@ -1,5 +1,5 @@
 import {
-  ForbiddenException,
+  BadRequestException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -22,15 +22,14 @@ export class UserService {
 
   async findById(id: string): Promise<User> {
     const user = await this.findOne(id);
-
-    if (user.id === 1) {
-      throw new ForbiddenException(`You are not allowed to access this user`);
-    }
-
     return user;
   }
 
   async create(body: CreateUserDto): Promise<User> {
+    const user = await this.userRepository.findOneBy({ email: body.email });
+    if (user) {
+      throw new BadRequestException(`Error creating user`);
+    }
     const newUser = await this.userRepository.save(body);
     return newUser;
   }
