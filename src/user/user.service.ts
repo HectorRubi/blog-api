@@ -41,10 +41,10 @@ export class UserService {
     return this.userRepository.save(updatedUser);
   }
 
-  async delete(id: string): Promise<{ deleted: boolean }> {
+  async delete(id: string): Promise<User> {
     const user = await this.findOne(id);
     await this.userRepository.delete(user.id);
-    return { deleted: true };
+    return user;
   }
 
   private async findOne(id: string): Promise<User> {
