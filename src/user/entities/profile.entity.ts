@@ -11,7 +11,7 @@ export class Profile {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'uuid', unique: true, default: () => 'uuid_generate_v4()' })
+  @Column({ type: 'uuid', unique: true, default: () => 'gen_random_uuid()' })
   uuid: string;
 
   @Column({ type: 'text' })
