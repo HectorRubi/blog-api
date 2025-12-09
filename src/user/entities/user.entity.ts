@@ -2,20 +2,20 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Profile } from './profile.entity';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'uuid', unique: true, default: () => 'gen_random_uuid()' })
-  uuid: string;
-
-  @Column({ type: 'varchar', length: 255 })
-  name: string;
+  // @Column({ type: 'uuid', unique: true, default: () => 'gen_random_uuid()' })
+  // uuid: string;
 
   @Column({ type: 'varchar', length: 255, unique: true })
   email: string;
@@ -36,4 +36,8 @@ export class User {
     name: 'updated_at',
   })
   updatedAt: Date;
+
+  @OneToOne(() => Profile, { nullable: false, cascade: true, eager: true })
+  @JoinColumn({ name: 'profile_id' })
+  profile: Profile;
 }

@@ -11,11 +11,11 @@ export class Profile {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'uuid', unique: true, default: () => 'gen_random_uuid()' })
-  uuid: string;
+  // @Column({ type: 'uuid', unique: true, default: () => 'gen_random_uuid()' })
+  // uuid: string;
 
-  @Column({ type: 'text' })
-  bio: string;
+  // @Column({ type: 'text' })
+  // bio: string;
 
   @Column({ type: 'varchar', length: 100 })
   name: string;
