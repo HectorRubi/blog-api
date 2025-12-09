@@ -8,12 +8,13 @@ import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create.dto';
 import { UpdateUserDto } from './dto/update.dto';
+import { Profile } from './entities/profile.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>,
+    private readonly userRepository: Repository<User>,
   ) {}
 
   async findAll(): Promise<User[]> {
@@ -23,6 +24,11 @@ export class UserService {
   async findById(id: string): Promise<User> {
     const user = await this.findOne(id);
     return user;
+  }
+
+  async getProfile(id: string): Promise<Profile> {
+    const user = await this.findOne(id);
+    return user.profile;
   }
 
   async create(body: CreateUserDto): Promise<User> {

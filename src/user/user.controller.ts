@@ -39,4 +39,9 @@ export class UserController {
   async delete(@Param('id') id: string) {
     return await this.userService.delete(id);
   }
+
+  @Get(':id/profile')
+  async getProfile(@Param('id') id: string) {
+    return await this.userService.getProfile(id);
+  }
 }
