@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { EnvConfig } from './env.model';
 import { UserModule } from './user/user.module';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { UserModule } from './user/user.module';
       inject: [ConfigService],
     }),
     UserModule,
+    PostsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
