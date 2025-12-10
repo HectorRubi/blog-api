@@ -6,8 +6,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
-import { CreateUserDto } from './dto/create.dto';
-import { UpdateUserDto } from './dto/update.dto';
+import { CreateUserDto } from './dto/user.dto';
+import { UpdateUserDto } from './dto/user.dto';
 import { Profile } from './entities/profile.entity';
 
 @Injectable()
@@ -21,12 +21,12 @@ export class UserService {
     return await this.userRepository.find();
   }
 
-  async findById(id: string): Promise<User> {
+  async findById(id: number): Promise<User> {
     const user = await this.findOne(id);
     return user;
   }
 
-  async getProfile(id: string): Promise<Profile> {
+  async getProfile(id: number): Promise<Profile> {
     const user = await this.findOne(id);
     return user.profile;
   }
@@ -40,21 +40,22 @@ export class UserService {
     return newUser;
   }
 
-  async update(id: string, body: UpdateUserDto): Promise<User> {
+  async update(id: number, body: UpdateUserDto): Promise<User> {
     const user = await this.findOne(id);
     const updatedUser = this.userRepository.merge(user, body);
     return this.userRepository.save(updatedUser);
   }
 
-  async delete(id: string): Promise<User> {
+  async delete(id: number): Promise<User> {
     const user = await this.findOne(id);
     await this.userRepository.delete(user.id);
     return user;
   }
 
-  private async findOne(id: string): Promise<User> {
+  private async findOne(id: number): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { id: Number(id) },
+      relations: { profile: true },
     });
 
     if (!user) {

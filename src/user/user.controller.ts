@@ -4,12 +4,13 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   Put,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create.dto';
-import { UpdateUserDto } from './dto/update.dto';
+import { CreateUserDto } from './dto/user.dto';
+import { UpdateUserDto } from './dto/user.dto';
 
 @Controller('user')
 export class UserController {
@@ -26,22 +27,25 @@ export class UserController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id', ParseIntPipe) id: number) {
     return await this.userService.findById(id);
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() body: UpdateUserDto) {
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: UpdateUserDto,
+  ) {
     return await this.userService.update(id, body);
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string) {
+  async delete(@Param('id', ParseIntPipe) id: number) {
     return await this.userService.delete(id);
   }
 
   @Get(':id/profile')
-  async getProfile(@Param('id') id: string) {
+  async getProfile(@Param('id', ParseIntPipe) id: number) {
     return await this.userService.getProfile(id);
   }
 }
