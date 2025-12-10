@@ -17,7 +17,9 @@ export class PostsService {
   ) {}
 
   async findAll(): Promise<Post[]> {
-    return await this.postRepository.find({ relations: ['user.profile'] });
+    return await this.postRepository.find({
+      relations: ['user.profile', 'categories'],
+    });
   }
 
   async findById(id: number): Promise<Post> {
@@ -30,6 +32,7 @@ export class PostsService {
       const post = await this.postRepository.save({
         ...body,
         user: { id: body.userId },
+        categories: body.categoryIds?.map((id) => ({ id })),
       });
       return this.findOne(post.id);
     } catch {
@@ -52,7 +55,7 @@ export class PostsService {
   private async findOne(id: number): Promise<Post> {
     const post = await this.postRepository.findOne({
       where: { id: Number(id) },
-      relations: ['user.profile'],
+      relations: ['user.profile', 'categories'],
     });
 
     if (!post) {
