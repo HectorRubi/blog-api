@@ -9,6 +9,7 @@ import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/user.dto';
 import { UpdateUserDto } from './dto/user.dto';
 import { Profile } from './entities/profile.entity';
+import { Post } from 'src/posts/entities/post.entity';
 
 @Injectable()
 export class UserService {
@@ -29,6 +30,11 @@ export class UserService {
   async getProfile(id: number): Promise<Profile> {
     const user = await this.findOne(id);
     return user.profile;
+  }
+
+  async getPosts(id: number): Promise<Post[]> {
+    const user = await this.findOne(id);
+    return user.posts;
   }
 
   async create(body: CreateUserDto): Promise<User> {
@@ -55,7 +61,7 @@ export class UserService {
   private async findOne(id: number): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { id: Number(id) },
-      relations: { profile: true },
+      relations: { profile: true, posts: true },
     });
 
     if (!user) {

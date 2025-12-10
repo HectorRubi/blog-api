@@ -48,4 +48,9 @@ export class UserController {
   async getProfile(@Param('id', ParseIntPipe) id: number) {
     return await this.userService.getProfile(id);
   }
+
+  @Get(':id/posts')
+  async getPosts(@Param('id', ParseIntPipe) id: number) {
+    return await this.userService.getPosts(id);
+  }
 }
