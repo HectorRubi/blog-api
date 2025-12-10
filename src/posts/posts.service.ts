@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Post } from './entities/post.entity';
@@ -13,7 +17,7 @@ export class PostsService {
   ) {}
 
   async findAll(): Promise<Post[]> {
-    return await this.postRepository.find();
+    return await this.postRepository.find({ relations: ['user.profile'] });
   }
 
   async findById(id: number): Promise<Post> {
@@ -22,8 +26,15 @@ export class PostsService {
   }
 
   async create(body: CreatePostDto): Promise<Post> {
-    const post = await this.postRepository.save(body);
-    return post;
+    try {
+      const post = await this.postRepository.save({
+        ...body,
+        user: { id: body.userId },
+      });
+      return this.findOne(post.id);
+    } catch {
+      throw new BadRequestException('Error creating post');
+    }
   }
 
   async update(id: number, body: UpdatePostDto): Promise<Post> {
@@ -39,7 +50,10 @@ export class PostsService {
   }
 
   private async findOne(id: number): Promise<Post> {
-    const post = await this.postRepository.findOneBy({ id: Number(id) });
+    const post = await this.postRepository.findOne({
+      where: { id: Number(id) },
+      relations: ['user.profile'],
+    });
 
     if (!post) {
       throw new NotFoundException(`Post with ID ${id} not found`);
