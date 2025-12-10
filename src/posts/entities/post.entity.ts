@@ -14,10 +14,10 @@ export class Post {
   @Column()
   title: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   content: string;
 
-  @Column()
+  @Column({ nullable: true })
   summary: string;
 
   @Column({ name: 'cover_image', nullable: true })
