@@ -8,6 +8,7 @@ import { Repository } from 'typeorm';
 import { CreateCategoryDto } from '../dto/create-category.dto';
 import { UpdateCategoryDto } from '../dto/update-category.dto';
 import { Category } from '../entities/category.entity';
+import { Post } from '../entities/post.entity';
 
 @Injectable()
 export class CategoryService {
@@ -26,6 +27,17 @@ export class CategoryService {
       throw new NotFoundException(`Category #${id} not found`);
     }
     return category;
+  }
+
+  async getPosts(id: number): Promise<Post[]> {
+    const category = await this.categoryRepository.findOne({
+      where: { id },
+      relations: ['posts'],
+    });
+    if (!category) {
+      throw new BadRequestException(`Category #${id} not found`);
+    }
+    return category.posts;
   }
 
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {

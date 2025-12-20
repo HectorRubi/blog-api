@@ -43,4 +43,9 @@ export class CategoryController {
   async remove(@Param('id', ParseIntPipe) id: number) {
     return await this.categoryService.remove(id);
   }
+
+  @Get(':id/posts')
+  async getPosts(@Param('id', ParseIntPipe) id: number) {
+    return await this.categoryService.getPosts(id);
+  }
 }
