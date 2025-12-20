@@ -49,8 +49,9 @@ export class UserService {
     if (user) {
       throw new BadRequestException(`Error creating user`);
     }
-    const newUser = await this.userRepository.save(body);
-    return newUser;
+    const newUser = this.userRepository.create(body);
+    const savedUser = await this.userRepository.save(newUser);
+    return this.findOne(savedUser.id);
   }
 
   async update(id: number, body: UpdateUserDto): Promise<User> {
