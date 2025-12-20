@@ -26,7 +26,7 @@ export class Post {
   @Column({ nullable: true })
   summary: string;
 
-  @Column({ name: 'cover_image', nullable: true })
+  @Column({ length: 800, name: 'cover_image', nullable: true })
   coverImage: string;
 
   @Column({ type: 'boolean', default: true, name: 'is_draft' })

@@ -16,6 +16,12 @@ export class Category {
   @Column({ unique: true })
   name: string;
 
+  @Column({ type: 'text', nullable: true })
+  description: string;
+
+  @Column({ length: 800, name: 'cover_image', nullable: true })
+  coverImage: string;
+
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
