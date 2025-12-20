@@ -52,6 +52,19 @@ export class PostsService {
     return post;
   }
 
+  async getPostsByCategory(categoryId: number): Promise<Post[]> {
+    const posts = await this.postRepository.find({
+      where: { categories: { id: categoryId } },
+      relations: ['user.profile'],
+    });
+
+    if (!posts) {
+      throw new NotFoundException('No posts found for this category');
+    }
+
+    return posts;
+  }
+
   private async findOne(id: number): Promise<Post> {
     const post = await this.postRepository.findOne({
       where: { id: Number(id) },

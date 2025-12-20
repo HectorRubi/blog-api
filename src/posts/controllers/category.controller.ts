@@ -9,12 +9,16 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { CategoryService } from '../services/category.service';
+import { PostsService } from '../services/posts.service';
 import { CreateCategoryDto } from '../dto/create-category.dto';
 import { UpdateCategoryDto } from '../dto/update-category.dto';
 
 @Controller('categories')
 export class CategoryController {
-  constructor(private readonly categoryService: CategoryService) {}
+  constructor(
+    private readonly categoryService: CategoryService,
+    private readonly postsService: PostsService,
+  ) {}
 
   @Get()
   async findAll() {
@@ -46,6 +50,6 @@ export class CategoryController {
 
   @Get(':id/posts')
   async getPosts(@Param('id', ParseIntPipe) id: number) {
-    return await this.categoryService.getPosts(id);
+    return await this.postsService.getPostsByCategory(id);
   }
 }
