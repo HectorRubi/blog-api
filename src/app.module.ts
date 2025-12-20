@@ -21,7 +21,7 @@ import { PostsModule } from './posts/posts.module';
         password: configService.get('DATABASE_PASSWORD', { infer: true }),
         database: configService.get('DATABASE_NAME', { infer: true }),
         autoLoadEntities: true,
-        synchronize: true,
+        synchronize: false,
       }),
       inject: [ConfigService],
     }),
