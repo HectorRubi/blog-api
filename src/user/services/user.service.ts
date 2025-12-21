@@ -5,10 +5,10 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './entities/user.entity';
-import { CreateUserDto } from './dto/user.dto';
-import { UpdateUserDto } from './dto/user.dto';
-import { Profile } from './entities/profile.entity';
+import { User } from '../entities/user.entity';
+import { CreateUserDto } from '../dto/user.dto';
+import { UpdateUserDto } from '../dto/user.dto';
+import { Profile } from '../entities/profile.entity';
 import { Post } from 'src/posts/entities/post.entity';
 
 @Injectable()
