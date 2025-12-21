@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { EnvConfig } from './env.model';
 import { UserModule } from './user/user.module';
 import { PostsModule } from './posts/posts.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { PostsModule } from './posts/posts.module';
     }),
     UserModule,
     PostsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
