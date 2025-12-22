@@ -23,10 +23,6 @@ export class CreatePostDto {
   @IsOptional()
   coverImage?: string;
 
-  @IsNumber()
-  @IsNotEmpty()
-  userId: number;
-
   @IsArray()
   @IsNumber({}, { each: true })
   @IsOptional()
