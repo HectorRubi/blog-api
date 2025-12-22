@@ -5,4 +5,5 @@ export interface EnvConfig {
   DATABASE_PASSWORD: string;
   DATABASE_NAME: string;
   JWT_SECRET: string;
+  OPENAI_API_KEY: string;
 }
