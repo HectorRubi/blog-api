@@ -16,9 +16,20 @@ graph LR
   API --> DB[(Postgres)]
 ```
 
+## Prerequisites
+
+Make sure you have [Docker](www.docker.com) installed on your machine. You can find installation instructions on the [official Docker website](www.docker.comget-started).
+
 ## Project setup
 
-Create a `.env` file in the project root with the required environment variables. You can use the example below as a starting point:
+Clone this repository:
+
+```bash
+$ git clone git@github.com:HectorRubi/blog-api.git
+$ cd blog-api
+```
+
+Then, create a `.env` file in the project root with the required environment variables. You can use the example below as a starting point:
 
 ```env
 # Database configuration
@@ -46,40 +57,16 @@ Variable descriptions:
 - `OPENAI_API_KEY` — API key for OpenAI; required if you want to use AI features like summary or image generation.
 - `PORT` — Optional. Server port; if not set, the app defaults to `3000`.
 
-After creating `.env`, run migrations and start the app:
+After creating `.env`, start up app containers:
 
 ```bash
-# run migrations
-$ npm run migrations:run
-
-# start app
-$ npm run start
+$ docker compose up
 ```
 
-## Compile and run the project
+Finally, run migrations:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+$ docker exec <app-container-name> npm run migrations:run
 ```
 
 ## Features & API
@@ -147,7 +134,6 @@ $ npm run test:cov
 
 - Start the app: `npm run start` (defaults to port `3000`).
 - Open the interactive docs at: `http://localhost:3000/docs`.
-- The raw Swagger JSON is available at: `http://localhost:3000/docs/swagger/json`.
 - Use the **Authorize** button in Swagger to paste `Bearer <token>` for testing protected endpoints.
 
 ## License
